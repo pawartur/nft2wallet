@@ -79,7 +79,7 @@ export class NFTList extends React.Component<Props, State> {
         </div></div>
         <div className="grid gap-2 grid-cols-4">
           {this.state.shouldFetchNFTs ?
-            <div className="text-slate-300 w-1/2 mx-auto flex items-center justify-center"><div class="animate-bounce mr-1"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <div className="absolute inset-0 backdrop-blur-md text-slate-300 w-full h-screen bg-navy/80 mx-auto flex items-center justify-center"><div class="animate-bounce mr-1"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
           </svg></div> <div>Fetching NFTs from Polygon...</div></div>
             :
