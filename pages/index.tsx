@@ -23,7 +23,7 @@ const Home: NextPage = () => {
         {isAuthenticated ? 
         <div>
           <div 
-                className={styles.card}
+                className={styles.button}
                 onClick={() => {
                   logout()
                   .then(function () {
@@ -44,9 +44,8 @@ const Home: NextPage = () => {
             <p className={styles.description}>
               Get started by logging in to Your Metamask wallet, so that we can list your NFTs
             </p>
-            <div className={styles.grid}>
-              <div 
-                className={styles.card}
+            <div 
+                className={styles.button}
                 onClick={() => {
                   authenticate({ signingMessage: "Authorize linking of your wallet" })
                   .then(function (user) {
@@ -60,7 +59,6 @@ const Home: NextPage = () => {
               >
                 <h2>Sign In to Metamask</h2>
               </div>
-            </div>
           </div>
         }
         
