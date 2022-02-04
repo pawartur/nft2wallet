@@ -67,22 +67,21 @@ export class NFTList extends React.Component<Props, State> {
     this.loadNFTsIfNeeed()
     return (
       <div className="w-full p-2 md:w-2/3 mx-auto">
-        <h1 className="uppercase text-left text-slate-300 font-sans">
-          Your NFTs:
-        </h1>
-        <div>
-          <p className={styles.description}>
-            Choose the NFT you want to send to your phone via email
-          </p>
-          <p>
-            Enter your Email Address: <input type="text" id="email-input"/>
-          </p>
+        <div className="uppercase flex items-start text-left text-slate-300 font-sans">
+        <div className="text-sm">
+        Choose the NFT you want to send to your phone via email
         </div>
+        <div class="w-full mb-6 ml-2 p-2 rounded-md flex items-center border bg-white">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+</svg>
+          <input className="w-full ml-2 p-2 rounded-md" placeholder="Your email address." type="text" id="email-input"/>
+        </div></div>
         <div className="flex items-start space-x-1 md:space-x-4 mt-4">
           {this.state.shouldFetchNFTs ?
             <div className="text-slate-300 w-1/2 mx-auto flex items-center justify-center"><div class="animate-bounce mr-1"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-          </svg></div> <div>Loading...</div></div>
+          </svg></div> <div>Fetching NFTs from Polygon...</div></div>
             :
             this.state.nfts.length > 0 ?
               this.state.nfts.map(nft =>
