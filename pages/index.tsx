@@ -2,8 +2,42 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
+import { useMoralis } from 'react-moralis'
+import { useEffect } from "react";
 
 const Home: NextPage = () => {
+  const { isAuthenticated, authenticate, logout } = useMoralis();
+  
+  const button = !isAuthenticated ? 
+    (<div className={styles.grid}>
+    <div 
+      className={styles.card}
+      onClick={() => {
+        authenticate({ signingMessage: "Authorize linking of your wallet" })
+        .then(function (user) {
+          console.log("logged in user:", user);
+        })
+        .catch(function (error) {
+          console.log(error);
+        })
+      } 
+      }
+    >
+      <h2>Sign In to Metamask</h2>
+    </div>
+  </div>) : 
+  (<div className={styles.grid}>
+    <div 
+      className={styles.card}
+      onClick={(e) => {
+        logout()
+      }
+      }
+    >
+      <h2>Sign Out</h2>
+    </div>
+  </div>)
+
   return (
     <div className={styles.container}>
       <Head>
@@ -16,6 +50,13 @@ const Home: NextPage = () => {
         <h1 className={styles.title}>
           Welcome to NFT2Wallet
         </h1>
+        <p className={styles.description}>
+          Get started by logging in to Your Metamask wallet, so that we can list your NFTs
+        </p>
+
+        <div className={styles.grid}>
+          {button}
+        </div>
       </main>
 
       <footer className={styles.footer}>
