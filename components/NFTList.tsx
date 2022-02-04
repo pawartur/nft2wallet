@@ -64,24 +64,24 @@ export class NFTList extends React.Component<Props, State> {
   renderNFT(nft: NFT) {
     return (
       <div 
-        className="w-full hover:shadow-md hover:shadow-orange-300/50 bg-slate-200 p-6 rounded-xl font-sans font-light"
+        className="w-full hover:shadow-md hover:shadow-orange-300/50 bg-slate-200 p-2 rounded-xl font-sans font-light"
       >
-      <div className="w-full h-64 rounded-xl shadow-inner bg-orange-200">Artwork placeholder
-      {  }
-      <img class="nft_artwork" src={this.state.imageCashe[nft.token_address] || ""}></img>
-      </div>
-        <div className="flex p-2 items-center text-left text-slate-700 text-sm font-semibold font-sans">
+      <div className="w-full rounded-xl shadow-inner bg-slate-300 mb-6">
+      <img className="p-1 rounded-xl" id="nft_artwork" src={this.state.imageCashe[nft.token_address] || ""}></img>
+      <div className="flex pt-4 pb-4 pl-2 items-center text-left text-xs text-slate-700 font-semibold font-sans">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
 </svg>{nft.name}
         </div>
+      </div>
+        
         <div 
           className=""
           onClick={() => {
             this.sendCreateCouponRequest(nft)
           }}
         >
-          <div className="p-4 bg-orange-300 hover:shadow-md cursor-pointer rounded-md text-slate-700">Send</div>
+          <div className="p-4 bg-orange-300 hover:shadow-md cursor-pointer rounded-md text-slate-700 font-sans font-semibold">Send</div>
         </div>
       </div>
     );
@@ -105,7 +105,7 @@ export class NFTList extends React.Component<Props, State> {
           {this.state.shouldFetchNFTs ?
             <div className="absolute inset-0 backdrop-blur-md text-slate-300 w-full h-screen bg-navy/80 mx-auto flex items-center justify-center"><div class="animate-bounce mr-1"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-          </svg></div> <div>Fetching NFTs from Polygon...</div></div>
+          </svg></div> <div className="font-sans font-semibold">Fetching NFTs from Polygon...</div></div>
             :
             this.state.nfts.length > 0 ?
               this.state.nfts.map(nft =>
