@@ -41,11 +41,21 @@ export class NFTList extends React.Component<Props, State> {
   }
 
   renderNFT(nft: NFT) {
+   
+    fetch(nft.token_uri, {method: 'GET'})
+      .then(response => {
+        document.getElementById('nft_artwork').setAttr("src", response.json().image)
+      })
+      .then(data => console.log(data));
+
     return (
       <div 
         className="w-full hover:shadow-md hover:shadow-orange-300/50 bg-slate-200 p-6 rounded-xl font-sans font-light"
       >
-      <div className="w-full h-64 rounded-xl shadow-inner bg-orange-200">Artwork placeholder</div>
+      <div className="w-full h-64 rounded-xl shadow-inner bg-orange-200">Artwork placeholder
+      {  }
+      <img id="nft_artwork"></img>
+      </div>
         <div className="flex p-2 items-center text-left text-slate-700 text-sm font-semibold font-sans">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
