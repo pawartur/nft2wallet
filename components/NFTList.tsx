@@ -40,6 +40,9 @@ export class NFTList extends React.Component<Props, State> {
         <p>
           name: {nft.name}
         </p>
+        <div className={styles.button}>
+          <p>Send</p>
+        </div>
       </div>
     );
   }
@@ -51,6 +54,14 @@ export class NFTList extends React.Component<Props, State> {
         <h1 className={styles.title}>
           Your NFTs
         </h1>
+        <div>
+          <p className={styles.description}>
+            Choose the NFT you want to send to your phone via email
+          </p>
+          <p>
+            Enter your Email Address: <input type="text" id="email-input"/>
+          </p>
+        </div>
         <div className={styles.grid}>
           {this.state.shouldFetchNFTs ?
             "Loading..."
