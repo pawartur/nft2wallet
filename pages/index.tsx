@@ -35,7 +35,7 @@ const Home: NextPage = () => {
                 } 
                 }
               >
-                <div className="text-slate-700 cursor-pointer font-sans p-4 bg-orange-300 rounded-md">Sign Out From MetaMask </div>
+                <div className="text-slate-700 cursor-pointer font-sans font-semibold p-3 md:p-4 bg-orange-300 text-xs md:text-md rounded-md">Sign Out From MetaMask </div>
               </div> 
               :
               <div className="text-slate-300 font-sans">You are logged out</div>

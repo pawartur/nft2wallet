@@ -91,8 +91,8 @@ export class NFTList extends React.Component<Props, State> {
     this.loadNFTsIfNeeed()
     return (
       <div className="w-full p-2 md:w-2/3 mx-auto">
-        <div className="uppercase flex items-start text-left text-slate-300 font-sans">
-        <div className="text-sm">
+        <div className="uppercase flex flex-wrap md:flex-nowrap items-start text-left text-slate-300 font-sans">
+        <div className="text-sm p-2 md:p-0 text-center md:text-left">
         Choose the NFT you want to send to your phone via email
         </div>
         <div class="w-full mb-6 ml-2 p-2 rounded-md flex items-center border bg-white">
