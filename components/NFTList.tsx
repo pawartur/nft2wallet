@@ -8,12 +8,14 @@ type Props = {};
 type State = {
   shouldFetchNFTs: boolean,
   nfts: NFT[]
+  imageCashe: { [token_address: string]: string }
 };
 
 export class NFTList extends React.Component<Props, State> {
   state: Readonly<State> = {
     shouldFetchNFTs: true,
-    nfts: []
+    nfts: [],
+    imageCashe: {}
   }
 
   async loadNFTsIfNeeed() {
@@ -31,6 +33,25 @@ export class NFTList extends React.Component<Props, State> {
       shouldFetchNFTs: false,
       nfts: results.result || []
     })
+    results.result?.forEach(nft => {
+      if (nft.token_uri) {
+        fetch(nft.token_uri, {method: 'GET'})
+        .then(response => {
+          response.json().then(json => {
+            if (json.image) {
+              const newImageCache = this.state.imageCashe;
+              newImageCache[nft.token_address] = json.image
+              this.setState({
+                ...this.state,
+                imageCashe: newImageCache
+              })
+            }
+          })
+        })
+        .then(data => console.log(data))
+        .catch(error => console.log(error));
+      }
+    });
   }
 
   sendCreateCouponRequest(nft: NFT) {
@@ -41,20 +62,13 @@ export class NFTList extends React.Component<Props, State> {
   }
 
   renderNFT(nft: NFT) {
-   
-    fetch(nft.token_uri, {method: 'GET'})
-      .then(response => {
-        document.getElementById('nft_artwork').setAttr("src", response.json().image)
-      })
-      .then(data => console.log(data));
-
     return (
       <div 
         className="w-full hover:shadow-md hover:shadow-orange-300/50 bg-slate-200 p-6 rounded-xl font-sans font-light"
       >
       <div className="w-full h-64 rounded-xl shadow-inner bg-orange-200">Artwork placeholder
       {  }
-      <img id="nft_artwork"></img>
+      <img class="nft_artwork" src={this.state.imageCashe[nft.token_address] || ""}></img>
       </div>
         <div className="flex p-2 items-center text-left text-slate-700 text-sm font-semibold font-sans">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
