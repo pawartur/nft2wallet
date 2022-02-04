@@ -19,7 +19,6 @@ const Home: NextPage = () => {
       <main className="p-2 bg-navy w-full min-h-full text-center font-outfit">
       <div className="w-full h-48 flex items-center justify-between md:p-6">
 <div><img src="img/NFT2walletLogo.png" className="h-36"></img></div>
-<div className="text-white font-sans font-light text-slate-300 md:text-lg text-xs">You are currently not logged in</div>
       </div>
         <div className="text-white md:text-8xl text-6xl">
           Your NFTs
@@ -76,9 +75,19 @@ const Home: NextPage = () => {
 </svg>connect metamask wallet</div>
               </div>
             </div>
+            <div className="mx-auto w-full md:w-1/2 flex md:flex-nowrap flex-wrap space-x-4 items-center justify-center">
+        <div className="bg-slate-200 text-slate-600 p-6 rounded-2xl text-center font-sans">
+        <svg xmlns="http://www.w3.org/2000/svg" className="m-2 w-16 h-16 mx-auto" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-radio"><circle cx="12" cy="12" r="2"></circle><path d="M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-.01a6 6 0 0 1 0-8.49m11.31-2.82a10 10 0 0 1 0 14.14m-14.14 0a10 10 0 0 1 0-14.14"></path></svg>
+          <div className="font-bold">Ticket</div>NFC or QRCode to use your NFT as a pass or a ticket</div>
+          <img src="img/hero@2x.png" className="mx-auto w-64"></img>
+          <div className="bg-slate-200 text-slate-600 p-6 rounded-2xl text-center font-sans">
+          <svg xmlns="http://www.w3.org/2000/svg" className="w-12 h-12 mx-auto" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+          <div className="font-bold">Digital ID</div>Use your NFT as an ID or a gift card in the real world</div>
+
+        </div>
           </div>
         }
-        
+         
       </main>
 
      <div className="w-full p-6 flex items-center justify-center text-slate-300 font-sans font-light">
