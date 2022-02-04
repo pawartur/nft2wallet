@@ -2,6 +2,7 @@ import React from 'react';
 import styles from '../styles/Home.module.css'
 import { Moralis }  from "moralis";
 import { NFT } from "../@types/types"
+import { sendCreatePassRequest } from '../helpers/APICalls';
 
 type Props = {};
 type State = {
@@ -32,6 +33,13 @@ export class NFTList extends React.Component<Props, State> {
     })
   }
 
+  sendCreateCouponRequest(nft: NFT) {
+    const emailAddress = (document.getElementById('email-input') as HTMLInputElement).value
+    console.log(emailAddress)
+    // TODO: Validate the email address
+    sendCreatePassRequest(emailAddress, nft) 
+  }
+
   renderNFT(nft: NFT) {
     return (
       <div 
@@ -40,7 +48,12 @@ export class NFTList extends React.Component<Props, State> {
         <p>
           name: {nft.name}
         </p>
-        <div className={styles.button}>
+        <div 
+          className={styles.button}
+          onClick={() => {
+            this.sendCreateCouponRequest(nft)
+          }}
+        >
           <p>Send</p>
         </div>
       </div>
