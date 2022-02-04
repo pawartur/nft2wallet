@@ -38,7 +38,7 @@ const Home: NextPage = () => {
                 <div className="text-slate-700 cursor-pointer font-sans p-4 bg-orange-300 rounded-md">Sign Out From MetaMask </div>
               </div> 
               :
-              <div>You are logged out</div>
+              <div className="text-slate-300 font-sans">You are logged out</div>
 }
       </div>
         <div className="text-white md:text-8xl text-6xl">
@@ -75,7 +75,7 @@ const Home: NextPage = () => {
                 } 
                 }
               >
-                <div className="p-6 mb-10 mt-10 bg-orange-300 w-full md:w-1/3 rounded-md hover:text-green-700 mx-auto font-sans font-bold uppercase text-slate-900 flex items-center justify-center">
+                <div className="p-6 mb-10 mt-10 cursor-pointer bg-orange-300 w-full md:w-1/3 rounded-md hover:text-green-700 mx-auto font-sans font-bold uppercase text-slate-900 flex items-center justify-center">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
 </svg>connect metamask wallet</div>
