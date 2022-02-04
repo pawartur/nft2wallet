@@ -35,7 +35,7 @@ export class NFTList extends React.Component<Props, State> {
   renderNFT(nft: NFT) {
     return (
       <div 
-        className="w-1/4 bg-slate-200 p-6 rounded-xl"
+        className="w-1/4 h-64 bg-slate-200 p-6 rounded-xl"
       >
         <p>
           name: {nft.name}
@@ -48,8 +48,8 @@ export class NFTList extends React.Component<Props, State> {
     this.loadNFTsIfNeeed()
     return (
       <div className="w-full p-2 md:w-2/3 mx-auto">
-        <h1 className={styles.title}>
-          Your NFTs
+        <h1 className="uppercase text-left text-slate-300 font-sans">
+          Your NFTs:
         </h1>
         <div className="flex items-start space-x-1 md:space-x-4 mt-4">
           {this.state.shouldFetchNFTs ?

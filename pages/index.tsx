@@ -19,6 +19,27 @@ const Home: NextPage = () => {
       <main className="p-2 bg-navy w-full min-h-full text-center font-outfit">
       <div className="w-full h-48 flex items-center justify-between md:p-6">
 <div><img src="img/NFT2walletLogo.png" className="h-36"></img></div>
+
+{
+  isAuthenticated ?
+ <div 
+                className=""
+                onClick={() => {
+                  logout()
+                  .then(function () {
+                    console.log("logged out");
+                  })
+                  .catch(function (error) {
+                    console.log(error);
+                  })
+                } 
+                }
+              >
+                <div className="text-slate-700 cursor-pointer font-sans p-4 bg-orange-300 rounded-md">Sign Out From MetaMask </div>
+              </div> 
+              :
+              <div>You are logged out</div>
+}
       </div>
         <div className="text-white md:text-8xl text-6xl">
           Your NFTs
@@ -33,21 +54,6 @@ const Home: NextPage = () => {
         
         {isAuthenticated ? 
         <div>
-          <div 
-                className=""
-                onClick={() => {
-                  logout()
-                  .then(function () {
-                    console.log("logged out");
-                  })
-                  .catch(function (error) {
-                    console.log(error);
-                  })
-                } 
-                }
-              >
-                <h2>Sign Out From MetaMask </h2>
-              </div>
           <NFTList/> 
         </div>
           : 
