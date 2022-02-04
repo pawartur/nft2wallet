@@ -2,6 +2,7 @@ import React from 'react';
 import styles from '../styles/Home.module.css'
 import { Moralis }  from "moralis";
 import { NFT } from "../@types/types"
+import { sendCreatePassRequest } from '../helpers/APICalls';
 
 type Props = {};
 type State = {
@@ -32,6 +33,13 @@ export class NFTList extends React.Component<Props, State> {
     })
   }
 
+  sendCreateCouponRequest(nft: NFT) {
+    const emailAddress = (document.getElementById('email-input') as HTMLInputElement).value
+    console.log(emailAddress)
+    // TODO: Validate the email address
+    sendCreatePassRequest(emailAddress, nft) 
+  }
+
   renderNFT(nft: NFT) {
     return (
       <div 
@@ -40,6 +48,14 @@ export class NFTList extends React.Component<Props, State> {
         <p>
           name: {nft.name}
         </p>
+        <div 
+          className={styles.button}
+          onClick={() => {
+            this.sendCreateCouponRequest(nft)
+          }}
+        >
+          <p>Send</p>
+        </div>
       </div>
     );
   }
@@ -51,6 +67,14 @@ export class NFTList extends React.Component<Props, State> {
         <h1 className="uppercase text-left text-slate-300 font-sans">
           Your NFTs:
         </h1>
+        <div>
+          <p className={styles.description}>
+            Choose the NFT you want to send to your phone via email
+          </p>
+          <p>
+            Enter your Email Address: <input type="text" id="email-input"/>
+          </p>
+        </div>
         <div className="flex items-start space-x-1 md:space-x-4 mt-4">
           {this.state.shouldFetchNFTs ?
             <div className="text-slate-300 w-1/2 mx-auto flex items-center justify-center"><div class="animate-bounce mr-1"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">

@@ -14,6 +14,7 @@
     "moralis": "^1.2.4",
     "next": "12.0.10",
     "postcss": "^8.4.6",
+    "nodemailer": "^6.7.2",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-moralis": "^1.2.1",
