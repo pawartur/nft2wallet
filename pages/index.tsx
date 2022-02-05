@@ -18,7 +18,7 @@ const Home: NextPage = () => {
 
       <main className="p-2 bg-navy w-full min-h-full text-center font-outfit">
       <div className="w-full h-48 flex items-center justify-between md:p-6">
-<div><img src="img/NFT2walletLogo.png" className="h-36"></img></div>
+<div><img src="/img/NFT2walletLogo.png" className="h-36"></img></div>
 
 {
   isAuthenticated ?

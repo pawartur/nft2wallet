@@ -59,7 +59,7 @@ export class NFTVerificator extends React.Component<Props, State> {
   render(): React.ReactNode {
     this.loadTheNFTIfNeeded()
     return (
-      <div>
+      <div className="w-full text-slate-300 font-sans font-semibold">
         {this.state.shouldFetchTheNFT ? 
           <p>fetching the NFT</p>
         :

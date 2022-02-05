@@ -2,10 +2,16 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import { useMoralis } from 'react-moralis'
 import { NFTVerificator } from '../../components/NFTVerificator';
+import React from 'react'
+import useWindowSize from 'react-use/lib/useWindowSize'
+import Confetti from 'react-confetti'
 
 const Home: NextPage = () => {
   const { isAuthenticated, authenticate, logout } = useMoralis();
 
+
+  const { width, height } = useWindowSize()
+  
   return (
     <div className="w-full bg-navy">
       <Head>
@@ -13,10 +19,14 @@ const Home: NextPage = () => {
         <meta name="description" content="NFT to Apple Wallet - Verify Your NFT" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
+     
       <main className="p-2 bg-navy w-full min-h-full text-center font-outfit">
+      <Confetti
+      width={width}
+      height={height}
+    />
       <div className="w-full h-48 flex items-center justify-between md:p-6">
-<div><img src="img/NFT2walletLogo.png" className="h-36"></img></div>
+<div><img src="/img/NFT2walletLogo.png" className="h-36"></img></div>
 
 {
   isAuthenticated ?
@@ -75,7 +85,7 @@ const Home: NextPage = () => {
         <div className="bg-slate-200 text-slate-600 p-6 rounded-2xl text-center font-sans">
         <svg xmlns="http://www.w3.org/2000/svg" className="m-2 w-16 h-16 mx-auto" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-radio"><circle cx="12" cy="12" r="2"></circle><path d="M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-.01a6 6 0 0 1 0-8.49m11.31-2.82a10 10 0 0 1 0 14.14m-14.14 0a10 10 0 0 1 0-14.14"></path></svg>
           <div className="font-bold">Ticket</div>NFC or QRCode to use your NFT as a pass or a ticket</div>
-          <img src="img/hero@2x.png" className="mx-auto w-64"></img>
+          <img src="/img/hero@2x.png" className="mx-auto w-64"></img>
           <div className="bg-slate-200 text-slate-600 p-6 rounded-2xl text-center font-sans">
           <svg xmlns="http://www.w3.org/2000/svg" className="w-12 h-12 mx-auto" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
           <div className="font-bold">Digital ID</div>Use your NFT as an ID or a gift card in the real world</div>
