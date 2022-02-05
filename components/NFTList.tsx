@@ -3,6 +3,7 @@ import styles from '../styles/Home.module.css'
 import { Moralis }  from "moralis";
 import { NFT } from "../@types/types"
 import { sendCreatePassRequest } from '../helpers/APICalls';
+import { normaliseURL } from '../helpers/urlAPI';
 
 type Props = {};
 type State = {
@@ -38,9 +39,10 @@ export class NFTList extends React.Component<Props, State> {
         fetch(nft.token_uri, {method: 'GET'})
         .then(response => {
           response.json().then(json => {
-            if (json.image) {
+            const imageURL = json.image || json.image_url
+            if (imageURL) {
               const newImageCache = this.state.imageCashe;
-              newImageCache[nft.token_address] = json.image
+              newImageCache[nft.token_address] = normaliseURL(imageURL)
               this.setState({
                 ...this.state,
                 imageCashe: newImageCache

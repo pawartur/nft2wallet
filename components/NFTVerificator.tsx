@@ -2,6 +2,7 @@ import React from 'react';
 import styles from '../styles/Home.module.css'
 import { Moralis }  from "moralis";
 import { NFT } from "../@types/types"
+import { normaliseURL } from '../helpers/urlAPI';
 
 type Props = {};
 type State = {
@@ -28,9 +29,10 @@ export class NFTVerificator extends React.Component<Props, State> {
     const options = {
       chain: chain,
       address: "0x216f927a2f13CE1ab8ea00d6377dCd51Ce2E6f23",
-      token_addresses: ["0x2953399124f0cbb46d2cbacd8a89cf0599974963"]
+      token_addresses: ["0x72b6dc1003e154ac71c76d3795a3829cfd5e33b9"]
 
     }
+
     const results = await Moralis.Web3API.account.getNFTs(options)
     const nft = results.result?.[0] || null
     this.setState({
@@ -43,28 +45,32 @@ export class NFTVerificator extends React.Component<Props, State> {
       fetch(nft.token_uri, {method: 'GET'})
       .then(response => {
         response.json().then(json => {
-          if (json.image) {
+          const imageURL = json.image || json.image_url
+          if (imageURL) {
             this.setState({
               ...this.state,
-              cachedImageURL: json.image
+              cachedImageURL: normaliseURL(imageURL)
             })
           }
         })
       })
       .then(data => console.log(data))
       .catch(error => console.log(error));
-    }
+      }
   }
 
   render(): React.ReactNode {
     this.loadTheNFTIfNeeded()
     return (
-      <div>
+      <div className="w-full min-h-screen text-slate-300 font-sans font-semibold">
         {this.state.shouldFetchTheNFT ? 
           <p>fetching the NFT</p>
         :
           this.state.nft ? 
-            <p>{this.state.nft?.name}</p>
+            <div className="md:w-1/4 w-full mx-auto p-4 bg-slate-300 rounded-xl">
+              <p className="text-slate-700">{this.state.nft?.name}</p>
+              <img src={this.state.cachedImageURL || ""}/>
+            </div>
           :
             <p> Couln't fetch the NFT </p>
         }
