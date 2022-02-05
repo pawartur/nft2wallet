@@ -7,10 +7,8 @@ import useWindowSize from 'react-use/lib/useWindowSize'
 import Confetti from 'react-confetti'
 
 const Home: NextPage = () => {
-  const { isAuthenticated, authenticate, logout } = useMoralis();
-
-
-  const { width, height } = useWindowSize()
+const { isAuthenticated, authenticate, logout } = useMoralis();
+const { width, height } = useWindowSize()
   
   return (
     <div className="w-full bg-navy">
@@ -22,6 +20,7 @@ const Home: NextPage = () => {
      
       <main className="p-2 bg-navy w-full min-h-full text-center font-outfit">
       <Confetti
+      numberOfPieces="100"
       width={width}
       height={height}
     />
