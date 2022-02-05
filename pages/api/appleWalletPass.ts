@@ -16,7 +16,7 @@ export default async function handler(
       {
         sendEmail(
           req.body["email_address"],
-          "Shortly we'll be able to send you your NFT called" + req.body["token_name"]
+          "Shortly we'll be able to send you your NFT called" + req.body["token_name"] + "with address" + req.body["token_address"]
         )
         res.status(200).json({ message: "Sent", error: undefined})
       }
@@ -25,5 +25,3 @@ export default async function handler(
       break;
   }
 }
-
-
