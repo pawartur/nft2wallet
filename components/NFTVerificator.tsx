@@ -1,21 +1,21 @@
 import React from 'react';
 import styles from '../styles/Home.module.css'
 import { Moralis }  from "moralis";
-import { NFT } from "../@types/types"
+import { NFT, NFTMetaData } from "../@types/types"
 import { normaliseURL } from '../helpers/urlAPI';
 
 type Props = {};
 type State = {
   shouldFetchTheNFT: boolean,
   nft: NFT | null,
-  cachedImageURL: string | null
+  cachedNFTMetaData: NFTMetaData | null
 };
 
 export class NFTVerificator extends React.Component<Props, State> {
   state: Readonly<State> = {
     shouldFetchTheNFT: true,
     nft: null,
-    cachedImageURL: null
+    cachedNFTMetaData: null
   }
 
   async loadTheNFTIfNeeded() {
@@ -44,19 +44,20 @@ export class NFTVerificator extends React.Component<Props, State> {
     if (nft?.token_uri) {
       fetch(nft.token_uri, {method: 'GET'})
       .then(response => {
-        response.json().then(json => {
-          const imageURL = json.image || json.image_url
-          if (imageURL) {
-            this.setState({
-              ...this.state,
-              cachedImageURL: normaliseURL(imageURL)
-            })
-          }
+        response.json().then((nftMetadata: NFTMetaData) => {
+          this.setState({
+            ...this.state,
+            cachedNFTMetaData: nftMetadata
+          })
         })
       })
       .then(data => console.log(data))
       .catch(error => console.log(error));
       }
+  }
+
+  getNFTImageURL(): string {
+    return normaliseURL(this.state.cachedNFTMetaData?.image_url || this.state.cachedNFTMetaData?.image || "")
   }
 
   render(): React.ReactNode {
@@ -69,7 +70,7 @@ export class NFTVerificator extends React.Component<Props, State> {
           this.state.nft ? 
             <div className="md:w-1/4 w-full mx-auto p-4 bg-slate-300 rounded-xl">
               <p className="text-slate-700">{this.state.nft?.name}</p>
-              <img src={this.state.cachedImageURL || ""}/>
+              <img src={this.getNFTImageURL()}/>
             </div>
           :
             <p> Couln't fetch the NFT </p>
