@@ -1,8 +1,9 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { generatePass } from "../../helpers/appleWalletPassAPI";
-import { sendEmail } from "../../helpers/emailAPI";
+import { generatePass } from "../../helpers/backendAppleWalletPassAPI";
+import { sendEmail } from "../../helpers/backendEmailAPI";
 import { fetchNFT } from "../../helpers/NFTAPI";
 import { Moralis }  from "moralis";
+import { validateEmail } from "../../helpers/emailAPI";
 
 type Data = {
   message: string,
@@ -21,6 +22,12 @@ export default async function handler(
   switch(req.method) {
     case "POST":
       {
+        const emailAddress = req.body["email_address"]
+        if (!validateEmail(emailAddress)) {
+          res.status(400).json({ message: "Invalid email address", error: undefined})
+          return;
+        }
+
         // TODO: Don't use hard-coded wallet address, take it from the request params
         const nft = await fetchNFT(
           "0x216f927a2f13CE1ab8ea00d6377dCd51Ce2E6f23",

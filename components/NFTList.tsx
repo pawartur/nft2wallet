@@ -4,6 +4,7 @@ import { Moralis }  from "moralis";
 import { NFT, NFTMetaData } from "../@types/types"
 import { sendCreatePassRequest } from '../helpers/APICalls';
 import { normaliseURL } from '../helpers/urlAPI';
+import { validateEmail } from '../helpers/emailAPI';
 
 type Props = {};
 type State = {
@@ -56,8 +57,25 @@ export class NFTList extends React.Component<Props, State> {
   sendCreateCouponRequest(nft: NFT) {
     const emailAddress = (document.getElementById('email-input') as HTMLInputElement).value
     console.log(emailAddress)
-    // TODO: Validate the email address
-    sendCreatePassRequest(emailAddress, nft) 
+    if (validateEmail(emailAddress)) {
+      sendCreatePassRequest(emailAddress, nft) 
+    } else {
+      this.showEmailInputError("Please, enter a valid email address")
+    }
+  }
+
+  showEmailInputError(errorMessage: string) {
+    const errorLabel = document.getElementById('error-info')
+    if (errorLabel) {
+      errorLabel.innerHTML = errorMessage
+    }
+  }
+
+  clearErrors() {
+    const errorLabel = document.getElementById('error-info')
+    if (errorLabel) {
+      errorLabel.innerHTML = ""
+    }
   }
 
   getNFTImageURL(nft: NFT): string {
@@ -107,8 +125,18 @@ export class NFTList extends React.Component<Props, State> {
         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
 </svg>
-          <input className="w-full ml-2 p-2 rounded-md" placeholder="Your email address." type="text" id="email-input"/>
-        </div></div>
+          <input 
+            className="w-full ml-2 p-2 rounded-md" 
+            placeholder="Your email address." 
+            type="text" 
+            id="email-input"
+            onChange={() => {
+              this.clearErrors()
+            }}
+          />
+        </div>
+        <p id="error-info"></p>
+        </div>
         <div className="mt-4 grid gap-2 grid-cols-1 md:grid-cols-4">
           {this.state.shouldFetchNFTs ?
             <div 
