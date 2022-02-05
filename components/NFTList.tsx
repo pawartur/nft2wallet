@@ -104,7 +104,7 @@ export class NFTList extends React.Component<Props, State> {
         <div className="grid gap-2 grid-cols-1 md:grid-cols-4">
           {this.state.shouldFetchNFTs ?
             <div 
-            className="w-full hover:shadow-md hover:shadow-orange-300/50 bg-slate-200 p-2 rounded-xl font-sans font-light"
+            className="w-full hover:shadow-md hover:shadow-orange-300/50 bg-slate-200 p-2 rounded-xl font-sans font-light animate-pulse"
           >
           <div className="w-full rounded-xl shadow-inner bg-slate-300 mb-6 animate-pulse"> Fetching NFTs
           <img className="p-1 h-64 rounded-xl" id="nft_artwork"></img>
