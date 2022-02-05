@@ -5,7 +5,7 @@ import { NFT } from '../@types/types'
 export async function generatePass(nft: NFT): Promise<any> {
   // FIXME: Don't store the cert in the repo in the final product ;P 
   const dir = path.resolve('./resources');
-  const template = await Template.load("./resources/passes/Lollipop.pass");
+  const template = await Template.load("./resources/passes/NFT.pass");
   await template.loadCertificate("./resources/cert/NFT2WalletSignerCert.pem", "nft2wallet");
   
   template.serialNumber = nft.token_address

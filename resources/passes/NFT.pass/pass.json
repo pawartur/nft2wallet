@@ -1,0 +1,17 @@
+{
+  "formatVersion" : 1,
+  "passTypeIdentifier" : "pass.me.arturwdowiarski.first-pass",
+  "teamIdentifier" : "Y23Q74DCEK",
+  "organizationName" : "NFT 2 Wallet",
+  "description" : "NFT Pass",
+  "foregroundColor" : "rgb(255, 255, 255)",
+  "backgroundColor" : "rgb(197, 31, 31)",
+  "generic" : {
+    "primaryFields" : [
+      {
+        "key" : "name",
+        "value" : "NFT Name"
+      }
+    ]
+  }
+}
