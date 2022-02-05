@@ -32,6 +32,7 @@ export class NFTVerificator extends React.Component<Props, State> {
       token_addresses: ["0x72b6dc1003e154ac71c76d3795a3829cfd5e33b9"]
 
     }
+
     const results = await Moralis.Web3API.account.getNFTs(options)
     const nft = results.result?.[0] || null
     this.setState({
@@ -61,13 +62,13 @@ export class NFTVerificator extends React.Component<Props, State> {
   render(): React.ReactNode {
     this.loadTheNFTIfNeeded()
     return (
-      <div className="w-full text-slate-300 font-sans font-semibold">
+      <div className="w-full min-h-screen text-slate-300 font-sans font-semibold">
         {this.state.shouldFetchTheNFT ? 
           <p>fetching the NFT</p>
         :
           this.state.nft ? 
-            <div>
-              <p>{this.state.nft?.name}</p>
+            <div className="md:w-1/4 w-full mx-auto p-4 bg-slate-300 rounded-xl">
+              <p className="text-slate-700">{this.state.nft?.name}</p>
               <img src={this.state.cachedImageURL || ""}/>
             </div>
           :
