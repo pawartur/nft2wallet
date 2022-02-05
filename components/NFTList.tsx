@@ -90,18 +90,18 @@ export class NFTList extends React.Component<Props, State> {
   render(): React.ReactNode {
     this.loadNFTsIfNeeed()
     return (
-      <div className="w-full p-2 md:w-2/3 mx-auto">
-        <div className="uppercase flex flex-wrap md:flex-nowrap items-start text-left text-slate-300 font-sans">
+      <div className="w-full  p-2 md:w-2/3 mx-auto">
+        <div className="uppercase bg-navy pt-2 sticky top-0 flex flex-wrap md:flex-nowrap items-start text-left text-slate-300 font-sans">
         <div className="text-sm p-2 md:p-0 text-center md:text-left">
         Choose the NFT you want to send to your phone via email
         </div>
-        <div class="w-full mb-6 ml-2 p-2 rounded-md flex items-center border bg-white">
+        <div class="w-full mb-2 ml-2 p-2 rounded-md flex items-center border bg-white">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
 </svg>
           <input className="w-full ml-2 p-2 rounded-md" placeholder="Your email address." type="text" id="email-input"/>
         </div></div>
-        <div className="grid gap-2 grid-cols-1 md:grid-cols-4">
+        <div className="mt-4 grid gap-2 grid-cols-1 md:grid-cols-4">
           {this.state.shouldFetchNFTs ?
             <div 
             className="w-full hover:shadow-md hover:shadow-orange-300/50 bg-slate-200 p-2 rounded-xl font-sans font-light animate-pulse"
