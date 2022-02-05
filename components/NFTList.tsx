@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from '../styles/Home.module.css'
 import { Moralis }  from "moralis";
-import { NFT } from "../@types/types"
+import { NFT, NFTMetaData } from "../@types/types"
 import { sendCreatePassRequest } from '../helpers/APICalls';
 import { normaliseURL } from '../helpers/urlAPI';
 
@@ -9,14 +9,14 @@ type Props = {};
 type State = {
   shouldFetchNFTs: boolean,
   nfts: NFT[]
-  imageCashe: { [token_address: string]: string }
+  nftsMetaData: { [token_address: string]: NFTMetaData }
 };
 
 export class NFTList extends React.Component<Props, State> {
   state: Readonly<State> = {
     shouldFetchNFTs: true,
     nfts: [],
-    imageCashe: {}
+    nftsMetaData: {}
   }
 
   async loadNFTsIfNeeed() {
@@ -38,16 +38,13 @@ export class NFTList extends React.Component<Props, State> {
       if (nft.token_uri) {
         fetch(nft.token_uri, {method: 'GET'})
         .then(response => {
-          response.json().then(json => {
-            const imageURL = json.image || json.image_url
-            if (imageURL) {
-              const newImageCache = this.state.imageCashe;
-              newImageCache[nft.token_address] = normaliseURL(imageURL)
+          response.json().then((nftMetaData: NFTMetaData) => {
+            const newNFTsMetaData = this.state.nftsMetaData;
+            newNFTsMetaData[nft.token_address] = nftMetaData
               this.setState({
                 ...this.state,
-                imageCashe: newImageCache
+                nftsMetaData: newNFTsMetaData
               })
-            }
           })
         })
         .then(data => console.log(data))
@@ -63,17 +60,26 @@ export class NFTList extends React.Component<Props, State> {
     sendCreatePassRequest(emailAddress, nft) 
   }
 
+  getNFTImageURL(nft: NFT): string {
+    const metaData = this.state.nftsMetaData[nft.token_address]
+    if (metaData) {
+      return normaliseURL(metaData.image_url || metaData.image || "")
+    } else {
+      return ""
+    }
+  }
+
   renderNFT(nft: NFT) {
     return (
       <div 
         className="w-full hover:shadow-md hover:shadow-orange-300/50 bg-slate-200 p-2 rounded-xl font-sans font-light"
       >
       <div className="w-full rounded-xl shadow-inner bg-slate-300 mb-6">
-      <img className="p-1 rounded-xl" id="nft_artwork" src={this.state.imageCashe[nft.token_address] || ""}></img>
+      <img className="p-1 rounded-xl" id="nft_artwork" src={this.getNFTImageURL(nft)}></img>
       <div className="flex pt-4 pb-4 pl-2 items-center text-left text-xs text-slate-700 font-semibold font-sans">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
-</svg>{nft.name}
+</svg>{this.state.nftsMetaData[nft.token_address]?.name}
         </div>
       </div>
         
