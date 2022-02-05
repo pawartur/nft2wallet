@@ -1,6 +1,9 @@
+import { EmailAttachment } from "../@types/types";
+
 export async function sendEmail(
   recipientAddress: string,
-  body: string
+  body: string,
+  attachments?: EmailAttachment[]
 ) {
       let nodemailer = require('nodemailer')
       var transporter = nodemailer.createTransport({
@@ -16,6 +19,7 @@ export async function sendEmail(
         to: recipientAddress,
         subject: `Your NFT Pass from NFT2Wallet!`,
         text: body,
+        attachments: attachments
       }
       transporter.sendMail(mailData, function (err: any, info: any) {
         if(err)

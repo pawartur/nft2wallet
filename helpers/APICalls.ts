@@ -10,6 +10,7 @@ export async function sendCreatePassRequest(
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ 
       token_name: nft.name,
+      token_address: nft.token_address,
       email_address: emailAddress
     })
   };
