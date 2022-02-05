@@ -103,9 +103,18 @@ export class NFTList extends React.Component<Props, State> {
         </div></div>
         <div className="grid gap-2 grid-cols-1 md:grid-cols-4">
           {this.state.shouldFetchNFTs ?
-            <div className="absolute inset-0 backdrop-blur-md text-slate-300 w-full h-screen bg-navy/80 mx-auto flex items-center justify-center"><div class="animate-bounce mr-1"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-          </svg></div> <div className="font-sans font-semibold">Fetching NFTs from Polygon...</div></div>
+            <div 
+            className="w-full hover:shadow-md hover:shadow-orange-300/50 bg-slate-200 p-2 rounded-xl font-sans font-light"
+          >
+          <div className="w-full rounded-xl shadow-inner bg-slate-300 mb-6 animate-pulse"> Fetching NFTs
+          <img className="p-1 h-64 rounded-xl" id="nft_artwork"></img>
+          <div className="flex pt-4 pb-4 pl-2 items-center text-left text-xs text-slate-700 font-semibold font-sans">
+            </div>
+          </div>
+            <div>
+              <div className="p-4 bg-slate-300 hover:shadow-md cursor-pointer rounded-md text-slate-700 font-sans font-semibold animate-pulse"></div>
+            </div>
+          </div>
             :
             this.state.nfts.length > 0 ?
               this.state.nfts.map(nft =>
