@@ -73,7 +73,7 @@ export class NFTVerificator extends React.Component<Props, State> {
               <img src={this.getNFTImageURL()}/>
             </div>
           :
-            <p> Couln't fetch the NFT </p>
+            <p> Couln&apos;t fetch the NFT </p>
         }
       </div>
     );
