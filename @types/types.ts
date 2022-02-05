@@ -4,4 +4,10 @@ export type NFT = {
   token_uri?: string;
 };
 
+export type EmailAttachment = {
+  filename: string,
+  content: string,
+  contentType: string
+}
+
 export {}
