@@ -25,10 +25,10 @@ export class NFTList extends React.Component<Props, State> {
       return
     }
     const chain: "polygon" | "eth" = "polygon"
-    // FIXME: Get address from the currently logged in metamask wallet, don't hard-code it
+    const walletAddress = Moralis.User.current()?.attributes.accounts[0] || ""
     const options = {
       chain: chain,
-      address: "0x216f927a2f13CE1ab8ea00d6377dCd51Ce2E6f23"
+      address: walletAddress
     }
     const results = await Moralis.Web3API.account.getNFTs(options)
     this.setState({
