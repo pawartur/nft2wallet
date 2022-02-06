@@ -4,7 +4,10 @@ import { Moralis }  from "moralis";
 import { NFT, NFTMetaData } from "../@types/types"
 import { normaliseURL } from '../helpers/urlAPI';
 
-type Props = {};
+type Props = {
+  walletAddress: string,
+  tokenAddress: string
+};
 type State = {
   shouldFetchTheNFT: boolean,
   nft: NFT | null,
@@ -23,13 +26,13 @@ export class NFTVerificator extends React.Component<Props, State> {
       return
     }
 
-    // TODO: Get the chain, NFT's address and wallet address from the hash/query params (I don't know yet how we'll do that)
+    // TODO: Verify the wallet address and token address params
     // FIXME: Verify that the hash/params were signed with the private key of the NFT owner
     const chain: "polygon" | "eth" = "polygon"
     const options = {
       chain: chain,
-      address: "0x216f927a2f13CE1ab8ea00d6377dCd51Ce2E6f23",
-      token_addresses: ["0x72b6dc1003e154ac71c76d3795a3829cfd5e33b9"]
+      address: this.props.walletAddress,
+      token_addresses: [this.props.tokenAddress]
 
     }
 
