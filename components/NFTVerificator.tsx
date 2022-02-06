@@ -38,7 +38,6 @@ export class NFTVerificator extends React.Component<Props, State> {
       nft: nft || null
     })
 
-    // TODO: move the code fetching NFT images to a helper function
     if (nft?.token_uri) {
       fetch(nft.token_uri, {method: 'GET'})
       .then(response => {
