@@ -108,10 +108,11 @@ export class NFTList extends React.Component<Props, State> {
 
   getNFTImageURL(nft: NFT): string {
     const metaData = this.getCachedNFTMetadata(nft)
+    const placeholderUrl = "https://i.ibb.co/4Fqw7b6/missing-Image.png"
     if (metaData) {
-      return normaliseURL(metaData.image_url || metaData.image || "")
+      return normaliseURL(metaData.image_url || metaData.image || placeholderUrl)
     } else {
-      return ""
+      return placeholderUrl
     }
   }
 
