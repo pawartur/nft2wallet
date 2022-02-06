@@ -23,7 +23,11 @@ const getResizePromise = (
   });
 }
 
-export async function generatePass(nft: NFT): Promise<any> {
+export async function generatePass(
+  nft: NFT,
+  appBaseURL: string,
+  walletAddress: string
+): Promise<any> {
   // FIXME: Don't store the cert in the repo in the final product ;P 
   const dir = path.resolve('./resources');
 
@@ -58,9 +62,11 @@ export async function generatePass(nft: NFT): Promise<any> {
       ]
     }
   });
+  const verificationURL = appBaseURL + "/verify/" + nft.token_address + "?walletAddress=" + walletAddress
+  console.log("VERIFICATION URL = " + verificationURL)
   template.barcodes = [
     {
-    "message" : nft.token_address,
+    "message" : verificationURL,
     "format" : "PKBarcodeFormatQR",
     "messageEncoding" : "iso-8859-1"
     }
