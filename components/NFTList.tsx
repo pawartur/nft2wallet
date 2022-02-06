@@ -61,12 +61,28 @@ export class NFTList extends React.Component<Props, State> {
     const walletAddress = Moralis.User.current()?.attributes.accounts[0] || ""
     const emailAddress = (document.getElementById('email-input') as HTMLInputElement).value
     if (validateEmail(emailAddress)) {
+      const progressIndicator = document.getElementById('action-in-progress')
+      if (progressIndicator) {
+        progressIndicator.style.display = "block"
+      }
       sendCreatePassRequest(
         this.props.absoluteURL,
         walletAddress,
         emailAddress, 
         nft
-      ) 
+      ).then(response => {
+        if (progressIndicator) {
+          progressIndicator.style.display = "none"
+        }
+        if (response.status === 200) {
+          const confirmBox = document.getElementById('action-confirm')
+          if (confirmBox) {
+            confirmBox.style.display = "block"
+          }
+        } else {
+          // TODO: Show error
+        }
+      })
     } else {
       this.showEmailInputError("Please, enter a valid email address")
     }
@@ -124,7 +140,7 @@ export class NFTList extends React.Component<Props, State> {
   render(): React.ReactNode {
     this.loadNFTsIfNeeed()
     return (
-      <div className="w-full  p-2 md:w-2/3 mx-auto">
+      <div className="w-full p-2 md:w-2/3 mx-auto">
         <div className="uppercase bg-navy pt-2 sticky top-0 flex flex-wrap md:flex-nowrap items-start text-left text-slate-300 font-sans">
         <div className="text-sm p-2 md:p-0 text-center md:text-left">
         Choose the NFT you want to send to your phone via email
@@ -167,6 +183,13 @@ export class NFTList extends React.Component<Props, State> {
               : "No NFTs" 
           }
         </div>
+        <div className="w-full fixed inset-0 backdrop-blur-lg rounded-xl flex items-center justify-center" id="action-in-progress" style={{display: 'none' }}><div className="w-1/2 mx-auto mt-6 md:mt-10 bg-slate-200 sticky p-10 rounded-xl flex flex-col items-center font-sans font-semibold"><div className="animate-spin"><svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+</svg></div>Your NFT is being transformed into an Apple Wallet Pass. Please wait!</div></div>
+<div className="w-full sticky inset-0 p-10 rounded-xl bg-green-200 font-sans font-semibold flex items-center justify-center" id="action-confirm" style={{display: 'none' }}> <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+</svg>Your Apple Pass was sent successfuly!</div>
       </div>
     );
   }

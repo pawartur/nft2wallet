@@ -61,7 +61,7 @@ export default function IndexPage({ absoluteURL }: any) {
         </p>
         
         {isAuthenticated ? 
-        <div>
+        <div className="relative">
           <NFTList
             absoluteURL={absoluteURL}
           /> 
@@ -105,7 +105,6 @@ export default function IndexPage({ absoluteURL }: any) {
         }
          
       </main>
-
      <div className="w-full p-6 flex items-center justify-center text-slate-300 font-sans font-light">
         
         <div className=""> Made with</div> <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 p-1 text-red-600" viewBox="0 0 20 20" fill="currentColor">

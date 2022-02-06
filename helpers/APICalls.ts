@@ -5,7 +5,7 @@ export async function sendCreatePassRequest(
   authenticatedWalletAddress: string,
   emailAddress: string,
   nft: NFT
-) {
+): Promise<Response>  {
   const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -16,7 +16,5 @@ export async function sendCreatePassRequest(
       email_address: emailAddress
     })
   };
-  fetch(absoluteURL+'/api/appleWalletPass', requestOptions)
-      .then(response => response.json())
-      .then(data => console.log(data));
+  return fetch(absoluteURL+'/api/appleWalletPass', requestOptions)
 }
