@@ -61,12 +61,28 @@ export class NFTList extends React.Component<Props, State> {
     const walletAddress = Moralis.User.current()?.attributes.accounts[0] || ""
     const emailAddress = (document.getElementById('email-input') as HTMLInputElement).value
     if (validateEmail(emailAddress)) {
+      const progressIndicator = document.getElementById('action-in-progress')
+      if (progressIndicator) {
+        progressIndicator.style.display = "block"
+      }
       sendCreatePassRequest(
         this.props.absoluteURL,
         walletAddress,
         emailAddress, 
         nft
-      ) 
+      ).then(response => {
+        if (progressIndicator) {
+          progressIndicator.style.display = "none"
+        }
+        if (response.status === 200) {
+          const confirmBox = document.getElementById('action-confirm')
+          if (confirmBox) {
+            confirmBox.style.display = "block"
+          }
+        } else {
+          // TODO: Show error
+        }
+      })
     } else {
       this.showEmailInputError("Please, enter a valid email address")
     }
@@ -167,6 +183,8 @@ export class NFTList extends React.Component<Props, State> {
               : "No NFTs" 
           }
         </div>
+        <div className="w-full bg-white" id="action-in-progress" style={{display: 'none' }}>This is a wating element/info box after user clicks on "send"</div>
+        <div className="w-full bg-white" id="action-confirm" style={{display: 'none' }}>This is a wating element/info box after request is completed</div>
       </div>
     );
   }
