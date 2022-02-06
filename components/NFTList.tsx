@@ -6,7 +6,10 @@ import { sendCreatePassRequest } from '../helpers/APICalls';
 import { normaliseURL } from '../helpers/urlAPI';
 import { validateEmail } from '../helpers/emailAPI';
 
-type Props = {};
+type Props = {
+  absoluteURL: string
+};
+
 type State = {
   shouldFetchNFTs: boolean,
   nfts: NFT[]
@@ -55,10 +58,15 @@ export class NFTList extends React.Component<Props, State> {
   }
 
   sendCreateCouponRequest(nft: NFT) {
+    const walletAddress = Moralis.User.current()?.attributes.accounts[0] || ""
     const emailAddress = (document.getElementById('email-input') as HTMLInputElement).value
-    console.log(emailAddress)
     if (validateEmail(emailAddress)) {
-      sendCreatePassRequest(emailAddress, nft) 
+      sendCreatePassRequest(
+        this.props.absoluteURL,
+        walletAddress,
+        emailAddress, 
+        nft
+      ) 
     } else {
       this.showEmailInputError("Please, enter a valid email address")
     }
