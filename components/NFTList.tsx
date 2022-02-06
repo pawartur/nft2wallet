@@ -11,50 +11,49 @@ type Props = {
 };
 
 type State = {
-  shouldFetchNFTs: boolean,
+  isLoadingNFTs: boolean,
   nfts: NFT[]
   nftsMetaData: { [token_address_and_id: string]: NFTMetaData }
 };
 
 export class NFTList extends React.Component<Props, State> {
   state: Readonly<State> = {
-    shouldFetchNFTs: true,
+    isLoadingNFTs: true,
     nfts: [],
     nftsMetaData: {}
   }
 
-  async loadNFTsIfNeeed() {
-    if (!this.state.shouldFetchNFTs) {
-      return
-    }
+  componentDidMount() {
     const chain: "polygon" | "eth" = "polygon"
     const walletAddress = Moralis.User.current()?.attributes.accounts[0] || ""
     const options = {
       chain: chain,
       address: walletAddress
     }
-    const results = await Moralis.Web3API.account.getNFTs(options)
-    this.setState({
-      shouldFetchNFTs: false,
-      nfts: results.result || []
-    })
-    results.result?.forEach(nft => {
-      if (nft.token_uri) {
-        fetch(nft.token_uri, {method: 'GET'})
-        .then(response => {
-          response.json().then((nftMetaData: NFTMetaData) => {
-            const newNFTsMetaData = this.state.nftsMetaData;
-            newNFTsMetaData[nft.token_address+":"+nft.token_id] = nftMetaData
-              this.setState({
-                ...this.state,
-                nftsMetaData: newNFTsMetaData
-              })
+    Moralis.Web3API.account.getNFTs(options).then(results => {
+      this.setState({
+        ...this.state,
+        isLoadingNFTs: false,
+        nfts: results.result || []
+      })
+      results.result?.forEach(nft => {
+        if (nft.token_uri) {
+          fetch(nft.token_uri, {method: 'GET'})
+          .then(response => {
+            response.json().then((nftMetaData: NFTMetaData) => {
+              const newNFTsMetaData = this.state.nftsMetaData;
+              newNFTsMetaData[nft.token_address+":"+nft.token_id] = nftMetaData
+                this.setState({
+                  ...this.state,
+                  nftsMetaData: newNFTsMetaData
+                })
+            })
           })
-        })
-        .then(data => console.log(data))
-        .catch(error => console.log(error));
-      }
-    });
+          .then(data => console.log(data))
+          .catch(error => console.log(error));
+        }
+      });
+    })
   }
 
   sendCreateCouponRequest(nft: NFT) {
@@ -143,7 +142,6 @@ export class NFTList extends React.Component<Props, State> {
   }
 
   render(): React.ReactNode {
-    this.loadNFTsIfNeeed()
     return (
       <div className="w-full p-2 md:w-2/3 mx-auto">
         <div className="uppercase bg-navy pt-2 sticky top-0 flex flex-wrap md:flex-nowrap items-start text-left text-slate-300 font-sans">
@@ -167,7 +165,7 @@ export class NFTList extends React.Component<Props, State> {
         <p id="error-info"></p>
         </div>
         <div className="mt-4 grid gap-2 grid-cols-1 md:grid-cols-3 lg:grid-cols-4">
-          {this.state.shouldFetchNFTs ?
+          {this.state.isLoadingNFTs ?
             <div 
             className="w-full hover:shadow-md hover:shadow-orange-300/50 bg-slate-200 p-2 rounded-xl font-sans font-light animate-pulse"
           >

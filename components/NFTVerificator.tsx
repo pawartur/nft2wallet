@@ -9,48 +9,44 @@ type Props = {
   tokenId: string
 };
 type State = {
-  shouldFetchTheNFT: boolean,
+  isLoadingNFT: boolean,
   nft: NFT | null,
   cachedNFTMetaData: NFTMetaData | null
 };
 
 export class NFTVerificator extends React.Component<Props, State> {
   state: Readonly<State> = {
-    shouldFetchTheNFT: true,
+    isLoadingNFT: true,
     nft: null,
     cachedNFTMetaData: null
   }
 
-  async loadTheNFTIfNeeded() {
-    if (!this.state.shouldFetchTheNFT) {
-      return
-    }
-
+  componentDidMount() {
     // TODO: Verify that the hash/params were signed with the private key of the NFT owner
-    const nft = await fetchNFT(
+    fetchNFT(
       this.props.walletAddress,
       this.props.tokenAddress,
       this.props.tokenId
-    )
-
-    this.setState({
-      shouldFetchTheNFT: false,
-      nft: nft || null
-    })
-
-    if (nft?.token_uri) {
-      fetch(nft.token_uri, {method: 'GET'})
-      .then(response => {
-        response.json().then((nftMetadata: NFTMetaData) => {
-          this.setState({
-            ...this.state,
-            cachedNFTMetaData: nftMetadata
+    ).then(nft => {
+      this.setState({
+        isLoadingNFT: false,
+        nft: nft || null
+      })
+  
+      if (nft?.token_uri) {
+        fetch(nft.token_uri, {method: 'GET'})
+        .then(response => {
+          response.json().then((nftMetadata: NFTMetaData) => {
+            this.setState({
+              ...this.state,
+              cachedNFTMetaData: nftMetadata
+            })
           })
         })
-      })
-      .then(data => console.log(data))
-      .catch(error => console.log(error));
+        .then(data => console.log(data))
+        .catch(error => console.log(error));
       }
+    })
   }
 
   getNFTImageURL(): string {
@@ -58,10 +54,9 @@ export class NFTVerificator extends React.Component<Props, State> {
   }
 
   render(): React.ReactNode {
-    this.loadTheNFTIfNeeded()
     return (
       <div className="w-full min-h-screen text-slate-300 font-sans font-semibold">
-        {this.state.shouldFetchTheNFT ? 
+        {this.state.isLoadingNFT ? 
           <p>fetching the NFT</p>
         :
           this.state.cachedNFTMetaData ? 
