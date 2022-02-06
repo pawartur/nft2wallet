@@ -4,6 +4,7 @@ import { sendEmail } from "../../helpers/backendEmailAPI";
 import { fetchNFT } from "../../helpers/NFTAPI";
 import { Moralis }  from "moralis";
 import { validateEmail } from "../../helpers/emailAPI";
+import { ethers } from "ethers";
 
 type Data = {
   message: string,
@@ -38,18 +39,9 @@ export default async function handler(
           emailAddress
         ])
         
-        const util = require('ethereumjs-util')
-        const { ethers } = require("ethers");
         const hash = ethers.utils.keccak256(ethers.utils.toUtf8Bytes(messageToSign))
-        console.log("HASH: "+hash)
-        const sig = util.fromRpcSig(signature);
-        const publicKey = util.ecrecover(util.toBuffer(hash), sig.v, sig.r, sig.s);
-        const signerAddress = "0x" + util.pubToAddress(publicKey).toString('hex');
-
-        console.log("SIGNER ADDRESS: " + signerAddress)
-        console.log("WALLET ADDRESS: " + walletAddress)
-
-        if (signerAddress !== walletAddress) {
+        const signerAddress = ethers.utils.verifyMessage(ethers.utils.arrayify(hash), signature)
+        if (signerAddress.toLowerCase() !== walletAddress.toLowerCase()) {
           res.status(400).json({ message: "Invalid signature", error: undefined})
           return;
         }
