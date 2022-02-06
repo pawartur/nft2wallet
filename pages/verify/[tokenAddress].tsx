@@ -47,6 +47,7 @@ console.log(router.query)
           <NFTVerificator
             walletAddress={router.query.walletAddress as string}
             tokenAddress={router.query.tokenAddress as string}
+            tokenId={router.query.tokenId as string}
           />
         </div>
         

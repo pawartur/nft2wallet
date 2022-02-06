@@ -1,12 +1,12 @@
 import React from 'react';
-import styles from '../styles/Home.module.css'
-import { Moralis }  from "moralis";
 import { NFT, NFTMetaData } from "../@types/types"
 import { normaliseURL } from '../helpers/urlAPI';
+import { fetchNFT } from "../helpers/NFTAPI";
 
 type Props = {
   walletAddress: string,
-  tokenAddress: string
+  tokenAddress: string,
+  tokenId: string
 };
 type State = {
   shouldFetchTheNFT: boolean,
@@ -26,21 +26,16 @@ export class NFTVerificator extends React.Component<Props, State> {
       return
     }
 
-    // TODO: Verify the wallet address and token address params
-    // FIXME: Verify that the hash/params were signed with the private key of the NFT owner
-    const chain: "polygon" | "eth" = "polygon"
-    const options = {
-      chain: chain,
-      address: this.props.walletAddress,
-      token_addresses: [this.props.tokenAddress]
+    // TODO: Verify that the hash/params were signed with the private key of the NFT owner
+    const nft = await fetchNFT(
+      this.props.walletAddress,
+      this.props.tokenAddress,
+      this.props.tokenId
+    )
 
-    }
-
-    const results = await Moralis.Web3API.account.getNFTs(options)
-    const nft = results.result?.[0] || null
     this.setState({
       shouldFetchTheNFT: false,
-      nft: results.result?.[0] || null
+      nft: nft || null
     })
 
     // TODO: move the code fetching NFT images to a helper function
