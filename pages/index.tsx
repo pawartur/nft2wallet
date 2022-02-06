@@ -1,13 +1,22 @@
-import type { NextPage } from 'next'
 import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/Home.module.css'
 import { useMoralis } from 'react-moralis'
 import { NFTList } from '../components/NFTList'
+import absoluteUrl from 'next-absolute-url'
 
-const Home: NextPage = () => {
+
+export async function getServerSideProps(context: any) {
+  const { req, query, res, asPath, pathname } = context;
+  const { protocol, host } = absoluteUrl(req)
+  return {
+    props: {
+      absoluteURL: `${protocol}//${host}`
+    }
+  }
+}
+
+
+export default function IndexPage({ absoluteURL }: any) {
   const { isAuthenticated, authenticate, logout } = useMoralis();
-
   return (
     <div className="w-full bg-navy">
       <Head>
@@ -54,7 +63,9 @@ const Home: NextPage = () => {
         
         {isAuthenticated ? 
         <div>
-          <NFTList/> 
+          <NFTList
+            absoluteURL={absoluteURL}
+          /> 
         </div>
           : 
           <div>
@@ -106,5 +117,3 @@ const Home: NextPage = () => {
    </div>
   )
 }
-
-export default Home
