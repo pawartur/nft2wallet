@@ -10,8 +10,8 @@ export async function sendCreatePassRequest(
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ 
-      absoluteURL: absoluteURL,
-      authenticatedWalletAddress: authenticatedWalletAddress,
+      absolute_url: absoluteURL,
+      wallet_address: authenticatedWalletAddress,
       token_address: nft.token_address,
       email_address: emailAddress
     })

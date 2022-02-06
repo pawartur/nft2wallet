@@ -22,23 +22,28 @@ export default async function handler(
   switch(req.method) {
     case "POST":
       {
-        const emailAddress = req.body["email_address"]
+        const absoluteURL: string = req.body["absolute_url"]
+        const walletAddress: string = req.body["wallet_address"]
+        const tokenAddress: string = req.body["token_address"]
+        const emailAddress: string = req.body["email_address"]
+
         if (!validateEmail(emailAddress)) {
           res.status(400).json({ message: "Invalid email address", error: undefined})
           return;
         }
 
-        // TODO: Don't use hard-coded wallet address, take it from the request params
+        // TODO: Validate other params
+
         const nft = await fetchNFT(
-          "0x216f927a2f13CE1ab8ea00d6377dCd51Ce2E6f23",
-          req.body["token_address"]
+          walletAddress,
+          tokenAddress
         )
         if (nft) {
           const pass = await generatePass(nft)
           const buf = await pass.asBuffer();
           console.log(buf)
           sendEmail(
-            req.body["email_address"],
+            emailAddress,
             "Click on the attachment to add your NFT to Apple Wallet!",
             [
               {
