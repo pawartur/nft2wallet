@@ -126,7 +126,7 @@ export class NFTList extends React.Component<Props, State> {
   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
 </svg>
           <input 
-            className="w-full ml-2 p-2 rounded-md" 
+            className="w-full ml-2 p-2 rounded-md text-slate-700" 
             placeholder="Your email address." 
             type="text" 
             id="email-input"
@@ -137,7 +137,7 @@ export class NFTList extends React.Component<Props, State> {
         </div>
         <p id="error-info"></p>
         </div>
-        <div className="mt-4 grid gap-2 grid-cols-1 md:grid-cols-4">
+        <div className="mt-4 grid gap-2 grid-cols-1 md:grid-cols-3 lg:grid-cols-4">
           {this.state.shouldFetchNFTs ?
             <div 
             className="w-full hover:shadow-md hover:shadow-orange-300/50 bg-slate-200 p-2 rounded-xl font-sans font-light animate-pulse"
