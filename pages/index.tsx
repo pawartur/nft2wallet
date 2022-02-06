@@ -62,7 +62,7 @@ export default function IndexPage({ absoluteURL }: any) {
         </p>
         
         {isAuthenticated ? 
-        <div>
+        <div className="relative">
           <NFTList
             absoluteURL={absoluteURL}
           /> 
