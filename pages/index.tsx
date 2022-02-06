@@ -1,15 +1,14 @@
 import Head from 'next/head'
 import { useMoralis } from 'react-moralis'
 import { NFTList } from '../components/NFTList'
-import absoluteUrl from 'next-absolute-url'
 
 
 export async function getServerSideProps(context: any) {
   const { req, query, res, asPath, pathname } = context;
-  const { protocol, host } = absoluteUrl(req)
+  // TODO: Don't encode http scheme
   return {
     props: {
-      absoluteURL: `${protocol}//${host}`
+      absoluteURL: `http://${req.headers.host}`
     }
   }
 }
