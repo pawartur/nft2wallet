@@ -39,7 +39,11 @@ export default async function handler(
           tokenAddress
         )
         if (nft) {
-          const pass = await generatePass(nft)
+          const pass = await generatePass(
+            nft,
+            absoluteURL,
+            walletAddress
+          )
           const buf = await pass.asBuffer();
           console.log(buf)
           sendEmail(
