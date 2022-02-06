@@ -13,6 +13,7 @@ export async function sendCreatePassRequest(
       absolute_url: absoluteURL,
       wallet_address: authenticatedWalletAddress,
       token_address: nft.token_address,
+      token_id: nft.token_id,
       email_address: emailAddress
     })
   };

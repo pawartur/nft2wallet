@@ -25,6 +25,7 @@ export default async function handler(
         const absoluteURL: string = req.body["absolute_url"]
         const walletAddress: string = req.body["wallet_address"]
         const tokenAddress: string = req.body["token_address"]
+        const tokenId: string = req.body["token_id"]
         const emailAddress: string = req.body["email_address"]
 
         if (!validateEmail(emailAddress)) {
@@ -36,7 +37,8 @@ export default async function handler(
 
         const nft = await fetchNFT(
           walletAddress,
-          tokenAddress
+          tokenAddress,
+          tokenId
         )
         if (nft) {
           const pass = await generatePass(
