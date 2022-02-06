@@ -27,6 +27,32 @@ export default async function handler(
         const tokenAddress: string = req.body["token_address"]
         const tokenId: string = req.body["token_id"]
         const emailAddress: string = req.body["email_address"]
+        const signature: string = req.body["signature"]
+
+        // Check the signature
+        const messageToSign = JSON.stringify([
+          absoluteURL,
+          walletAddress,
+          tokenAddress,
+          tokenId,
+          emailAddress
+        ])
+        
+        const util = require('ethereumjs-util')
+        const { ethers } = require("ethers");
+        const hash = ethers.utils.keccak256(ethers.utils.toUtf8Bytes(messageToSign))
+        console.log("HASH: "+hash)
+        const sig = util.fromRpcSig(signature);
+        const publicKey = util.ecrecover(util.toBuffer(hash), sig.v, sig.r, sig.s);
+        const signerAddress = "0x" + util.pubToAddress(publicKey).toString('hex');
+
+        console.log("SIGNER ADDRESS: " + signerAddress)
+        console.log("WALLET ADDRESS: " + walletAddress)
+
+        if (signerAddress !== walletAddress) {
+          res.status(400).json({ message: "Invalid signature", error: undefined})
+          return;
+        }
 
         if (!validateEmail(emailAddress)) {
           res.status(400).json({ message: "Invalid email address", error: undefined})

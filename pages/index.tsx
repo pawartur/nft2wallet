@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import { useEffect } from 'react';
 import { useMoralis } from 'react-moralis'
 import { NFTList } from '../components/NFTList'
 
@@ -13,9 +14,20 @@ export async function getServerSideProps(context: any) {
   }
 }
 
-
 export default function IndexPage({ absoluteURL }: any) {
-  const { isAuthenticated, authenticate, logout } = useMoralis();
+  const { isInitialized, isAuthenticated, authenticate, logout, isWeb3Enabled, isWeb3EnableLoading, enableWeb3 } = useMoralis();
+
+  useEffect(() => {
+    if (isInitialized && isAuthenticated && !isWeb3Enabled && !isWeb3EnableLoading) {
+      enableWeb3()
+    }
+  }, [
+    isInitialized, 
+    isAuthenticated, 
+    isWeb3Enabled, 
+    isWeb3EnableLoading
+  ]);
+
   return (
     <div className="w-full bg-navy">
       <Head>
