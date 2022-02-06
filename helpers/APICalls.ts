@@ -1,6 +1,7 @@
 import { NFT } from "../@types/types";
 import { Moralis }  from "moralis";
 import  Web3 from 'web3';
+import { ethers } from 'ethers';
 
 function signMessageWithDefaultAccount(
   message: string
@@ -11,8 +12,9 @@ function signMessageWithDefaultAccount(
     web3.eth.getAccounts().then(accounts => {
       const defaultAccount = accounts[0]
       if (defaultAccount) {
-        const hash = web3.utils.sha3(message) || ""
-        web3.eth.sign(hash, defaultAccount, function (err: any, signature: any) {
+        const hash = ethers.utils.keccak256(ethers.utils.toUtf8Bytes(message))
+        web3.eth.personal.sign(hash, defaultAccount, "noop")
+        .then( signature => {
           resolve(signature)
         });
       } else {
