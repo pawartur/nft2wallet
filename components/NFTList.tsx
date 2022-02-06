@@ -13,7 +13,7 @@ type Props = {
 type State = {
   shouldFetchNFTs: boolean,
   nfts: NFT[]
-  nftsMetaData: { [token_address: string]: NFTMetaData }
+  nftsMetaData: { [token_address_and_id: string]: NFTMetaData }
 };
 
 export class NFTList extends React.Component<Props, State> {
@@ -44,7 +44,7 @@ export class NFTList extends React.Component<Props, State> {
         .then(response => {
           response.json().then((nftMetaData: NFTMetaData) => {
             const newNFTsMetaData = this.state.nftsMetaData;
-            newNFTsMetaData[nft.token_address] = nftMetaData
+            newNFTsMetaData[nft.token_address+":"+nft.token_id] = nftMetaData
               this.setState({
                 ...this.state,
                 nftsMetaData: newNFTsMetaData
@@ -102,8 +102,12 @@ export class NFTList extends React.Component<Props, State> {
     }
   }
 
+  getCachedNFTMetadata(nft: NFT): NFTMetaData | undefined {
+    return this.state.nftsMetaData[nft.token_address+":"+nft.token_id]
+  }
+
   getNFTImageURL(nft: NFT): string {
-    const metaData = this.state.nftsMetaData[nft.token_address]
+    const metaData = this.getCachedNFTMetadata(nft)
     if (metaData) {
       return normaliseURL(metaData.image_url || metaData.image || "")
     } else {
@@ -121,7 +125,7 @@ export class NFTList extends React.Component<Props, State> {
       <div className="flex pt-4 pb-4 pl-2 items-center text-left text-xs text-slate-700 font-semibold font-sans">
       <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
-</svg>{this.state.nftsMetaData[nft.token_address]?.name}
+</svg>{this.getCachedNFTMetadata(nft)?.name}
         </div>
       </div>
         
