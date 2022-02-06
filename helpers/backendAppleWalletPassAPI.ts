@@ -62,7 +62,7 @@ export async function generatePass(
       ]
     }
   });
-  const verificationURL = appBaseURL + "/verify/" + nft.token_address + "?walletAddress=" + walletAddress
+  const verificationURL = appBaseURL + "/verify/" + nft.token_address + "?walletAddress=" + walletAddress + "&tokenId=" + nft.token_id
   console.log("VERIFICATION URL = " + verificationURL)
   template.barcodes = [
     {
@@ -73,7 +73,7 @@ export async function generatePass(
   ]
   await template.images.add("icon", "./resources/passes/NFT.pass/icon.png")
   await template.images.add("logo", "./resources/passes/NFT.pass/logo.png")
-  const filepath = "./resources/" + nft.token_address + ".png"
+  const filepath = "./resources/" + nft.token_address + ":" + nft.token_id + ".png"
   if (image) {
     if (!fs.existsSync(filepath)) {
       const thumbnail = await getResizePromise(
