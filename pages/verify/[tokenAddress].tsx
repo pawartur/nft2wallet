@@ -33,7 +33,7 @@ console.log(router.query)
       height={height}
     />
       <div className="w-full h-48 flex items-center justify-between md:p-6">
-<div><img src="/img/NFT2walletLogo.png" className="h-36"></img></div>
+<div><img src="/img/NFT2walletLogo.png" className="h-24 md:h-36"></img></div>
 
 
   <div className="text-slate-300 font-sans font-semibold p-3 md:p-4 text-xs md:text-md uppercase flex items-center"> <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
