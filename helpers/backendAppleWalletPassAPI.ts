@@ -7,19 +7,31 @@ import { normaliseURL } from './urlAPI';
 
 const getResizePromise = (
   image: any,
-  filepath: string
+  filepath: string,
+  resizedFilepath: string
   ) => {
   return new Promise((resolve) => {
-      setTimeout(() => {
-        im.resize({
-          srcData: image,
-          format: 'png',
-          height: 144
-        }, (err: any, stdout: any, stderr: any) => {
-          fs.writeFileSync(filepath, stdout, 'binary');
-          resolve(true)
-        })
-      }, 60);
+    setTimeout(() => {
+      console.log('WRITING TO filepath')
+      fs.writeFileSync(filepath, image, 'binary');
+      console.log('FINISHED WRITING TO filepath')
+      im.convert([
+        filepath, 
+        '-resize', 
+        '375x144', 
+        '-background',
+        'rgb(39, 45, 115)',
+        '-gravity',
+        'center',
+        '-extent',
+        '375x144',
+        resizedFilepath
+      ], 
+      function(err: any, stdout: any){
+        console.log("RESOLVING RESIZING PROMISE")
+        resolve("Success")
+      });
+    }, 60);
   });
 }
 
@@ -84,14 +96,21 @@ export async function generatePass(
   await template.images.add("icon", "./resources/passes/NFT.pass/icon.png")
   await template.images.add("logo", "./resources/passes/NFT.pass/logo.png")
   const filepath = "./resources/" + nft.token_address + ":" + nft.token_id + ".png"
+  const resizedFilepath = "./resources/" + nft.token_address + ":" + nft.token_id + "-resized.png"
   if (image) {
-    if (!fs.existsSync(filepath)) {
-      const thumbnail = await getResizePromise(
+    if (!fs.existsSync(resizedFilepath)) {
+      console.log("FILE DOESN'T EXIST AT resizedFilepath")
+      await getResizePromise(
         image,
-        filepath
+        filepath,
+        resizedFilepath
       )
+      console.log("FINISHED WAITING FOR PROMISE")
+    } else {
+      console.log("FILE EXISTS AT resizedFilepath")
     }
-    await template.images.add("strip", filepath)
+    console.log("TRYING TO ADD STRIP")
+    await template.images.add("strip", resizedFilepath)
   }
 
   await template.loadCertificate("./resources/cert/NFT2WalletSignerCert.pem", "nft2wallet");
