@@ -4,7 +4,6 @@ import Head from 'next/head'
 import { NFTVerificator } from '../../components/NFTVerificator';
 import React from 'react'
 import useWindowSize from 'react-use/lib/useWindowSize'
-import Confetti from 'react-confetti'
 
 
 // router.query is empty, if there's no getServerSideProps: https://nextjs.org/docs/advanced-features/automatic-static-optimization
@@ -27,11 +26,6 @@ console.log(router.query)
       </Head>
      
       <main className="p-2 bg-navy w-full min-h-full text-center font-outfit">
-      <Confetti
-      numberOfPieces={100}
-      width={width}
-      height={height}
-    />
       <div className="w-full h-48 flex items-center justify-between md:p-6">
 <div><img src="/img/NFT2walletLogo.png" className="h-24 md:h-36"></img></div>
 
@@ -48,6 +42,8 @@ console.log(router.query)
             walletAddress={router.query.walletAddress as string}
             tokenAddress={router.query.tokenAddress as string}
             tokenId={router.query.tokenId as string}
+            windowHeight={height}
+            windowWidth={width}
           />
         </div>
         
