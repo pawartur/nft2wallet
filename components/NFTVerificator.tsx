@@ -62,6 +62,7 @@ export class NFTVerificator extends React.Component<Props, State> {
           this.state.cachedNFTMetaData ? 
             <div className="md:w-1/4 w-full mx-auto p-4 bg-slate-300 rounded-xl">
               <p className="text-slate-700">{this.state.cachedNFTMetaData?.name}</p>
+              <p className="text-slate-700">{this.state.cachedNFTMetaData?.description}</p>
               <img src={this.getNFTImageURL()}/>
             </div>
           :
