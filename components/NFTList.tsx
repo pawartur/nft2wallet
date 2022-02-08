@@ -120,13 +120,19 @@ export class NFTList extends React.Component<Props, State> {
       <div 
         className="w-full hover:shadow-md hover:shadow-orange-300/50 bg-slate-200 p-2 rounded-xl font-sans font-light"
       >
+      
       <div className="w-full h-4/5 rounded-xl shadow-inner bg-slate-300 mb-6">
-      <img className="p-1 h-4/5 w-full object-cover rounded-xl" id="nft_artwork" src={this.getNFTImageURL(nft)}></img>
-      <div className="flex pt-4 pb-4 pl-2 items-center text-left text-xs text-slate-700 font-semibold font-sans">
+      <img className="p-1 h-4/5 w-full object-cover hover:object-contain rounded-xl" id="nft_artwork" src={this.getNFTImageURL(nft)}></img>
+      <div className="w-full pt-4 pb-4 pl-2 items-center text-left text-xs text-slate-700 font-semibold font-sans flex flex-col">
+      <div className="w-full flex items-center justify-items-start">
       <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
-</svg>{this.getCachedNFTMetadata(nft)?.name}
-{this.getCachedNFTMetadata(nft)?.description}
+</svg><div className="font-sans font-semibold">{this.getCachedNFTMetadata(nft)?.name}</div></div>
+<div className="w-full text-left font-sans font-light text-slate-600 flex items-center">
+<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+</svg> <div className="truncate">{this.getCachedNFTMetadata(nft)?.description}</div></div>
+
         </div>
       </div>
         
