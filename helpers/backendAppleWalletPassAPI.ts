@@ -14,7 +14,7 @@ const getResizePromise = (
         im.resize({
           srcData: image,
           format: 'png',
-          width: 90
+          height: 144
         }, (err: any, stdout: any, stderr: any) => {
           fs.writeFileSync(filepath, stdout, 'binary');
           resolve(true)
@@ -32,12 +32,15 @@ export async function generatePass(
   const dir = path.resolve('./resources');
 
   let nftName = nft.name
+  let nftDescription = ""
   let image: any | undefined = undefined
   if (nft?.token_uri) {
     const response = await fetch(nft.token_uri, {method: 'GET'})
     const nftMetaData = await response.json()
     nftName = nftMetaData.name
+    nftDescription = nftMetaData.description
     const imageURL = nftMetaData.image_url || nftMetaData.image
+    console.log("IMAGE URL: " + imageURL)
     if (imageURL) {
       const response = await fetch(normaliseURL(imageURL));
       const arrayBuffer = await response.arrayBuffer();
@@ -45,19 +48,26 @@ export async function generatePass(
     }
   }
 
-  const template = new Template("generic", {
+  const template = new Template("coupon", {
     passTypeIdentifier: "pass.me.arturwdowiarski.first-pass",
     teamIdentifier: "Y23Q74DCEK",
     organizationName : "NFT 2 Wallet",
+    logoText: "NFT 2 Wallet",
     foregroundColor : "rgb(203, 213, 225)",
     backgroundColor : "rgb(39, 45, 115)",
+    labelColor: "rgb(253, 186, 116)",
     description: "NFT 2 Wallet Pass",
     sharingProhibited: true,
-    generic: {
-      primaryFields : [
+    coupon: {
+      secondaryFields : [
         {
           "key" : "name",
           "value" : nftName
+        },
+        {
+          "key" : "description",
+          "label" : "INFO",
+          "value" : nftDescription
         }
       ]
     }
@@ -81,7 +91,7 @@ export async function generatePass(
         filepath
       )
     }
-    await template.images.add("thumbnail", filepath)
+    await template.images.add("strip", filepath)
   }
 
   await template.loadCertificate("./resources/cert/NFT2WalletSignerCert.pem", "nft2wallet");
