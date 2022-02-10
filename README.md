@@ -6,7 +6,11 @@ This is a Next.js frontend + backend app that lets you:
 
 In order to run this app you have to:   
 a. Install ImageMagick in your env   
-b. Put the certificate required to generate Apple Wallet passes, signed with your private key, in `/resources/cert/NFT2WalletSignerCert.pem` (see [tynovyatkin/pass-js](https://github.com/tinovyatkin/pass-js) for more details)   
+b. Put the certificate required to generate Apple Wallet passes, signed with your private key, in `/resources/cert/NFT2WalletSignerCert.pem` (see [tynovyatkin/pass-js](https://github.com/tinovyatkin/pass-js) for more details)
+
+To run in locally with a dev server:
+* `yarn install`
+* `yarn dev`
 
 License:   
 NFT2Wallet is [MIT Licensed](https://github.com/pawartur/nft2wallet/blob/main/LICENSE)
