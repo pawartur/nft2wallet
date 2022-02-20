@@ -3,7 +3,6 @@ import { useEffect } from 'react';
 import { useMoralis } from 'react-moralis'
 import { NFTList } from '../components/NFTList'
 
-
 export async function getServerSideProps(context: any) {
   const { req, query, res, asPath, pathname } = context;
   // TODO: Don't encode http scheme
@@ -76,7 +75,7 @@ export default function IndexPage({ absoluteURL }: any) {
         <div className="relative">
           <NFTList
             absoluteURL={absoluteURL}
-          /> 
+          />   
         </div>
           : 
           <div>

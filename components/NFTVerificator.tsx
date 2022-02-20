@@ -3,6 +3,7 @@ import { NFT, NFTMetaData } from "../@types/types"
 import { normaliseURL } from '../helpers/urlAPI';
 import { fetchNFT } from "../helpers/NFTAPI";
 import Confetti from 'react-confetti'
+import { Moralis }  from "moralis";
 
 type Props = {
   walletAddress: string,
@@ -28,31 +29,38 @@ export class NFTVerificator extends React.Component<Props, State> {
 
   componentDidMount() {
     // TODO: Verify that the hash/params were signed with the private key of the NFT owner
-    fetchNFT(
-      this.props.walletAddress,
-      this.props.tokenAddress,
-      this.props.tokenId
-    ).then(nft => {
-      this.setState({
-        ...this.state,
-        isLoadingNFT: false,
-        nft: nft || null
-      })
-  
-      if (nft?.token_uri) {
-        fetch(nft.token_uri, {method: 'GET'})
-        .then(response => {
-          response.json().then((nftMetadata: NFTMetaData) => {
-            this.setState({
-              ...this.state,
-              cachedNFTMetaData: nftMetadata,
-              addConfetti: true
+
+    Moralis.start({
+      serverUrl: process.env.NEXT_PUBLIC_SERVER_URL || "",
+      appId:process.env.NEXT_PUBLIC_APP_ID || ""
+    }).then(() => {
+      fetchNFT(
+        Moralis,
+        this.props.walletAddress,
+        this.props.tokenAddress,
+        this.props.tokenId
+      ).then(nft => {
+        this.setState({
+          ...this.state,
+          isLoadingNFT: false,
+          nft: nft || null
+        })
+    
+        if (nft?.token_uri) {
+          fetch(nft.token_uri, {method: 'GET'})
+          .then(response => {
+            response.json().then((nftMetadata: NFTMetaData) => {
+              this.setState({
+                ...this.state,
+                cachedNFTMetaData: nftMetadata,
+                addConfetti: true
+              })
             })
           })
-        })
-        .then(data => console.log(data))
-        .catch(error => console.log(error));
-      }
+          .then(data => console.log(data))
+          .catch(error => console.log(error));
+        }
+      })
     })
   }
 

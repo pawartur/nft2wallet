@@ -2,6 +2,7 @@ import { NFT } from "../@types/types";
 import { Moralis }  from "moralis";
 
 export async function fetchNFT(
+  moralisInterface: Moralis,
   walletAddress: string,
   tokenAddress: string ,
   tokenId: string,
@@ -12,7 +13,7 @@ export async function fetchNFT(
     address: walletAddress,
     tokenAddress: [tokenAddress]
   }
-  const results = await Moralis.Web3API.account.getNFTs(options)
+  const results = await moralisInterface.Web3API.account.getNFTs(options)
   const requestedNFT = results.result?.find(nft => {
     return (nft.token_address === tokenAddress && nft.token_id === tokenId)
   })
