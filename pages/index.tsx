@@ -14,16 +14,39 @@ export async function getServerSideProps(context: any) {
   }
 }
 
+let startedEnablingWeb3 = false
+
 export default function IndexPage({ absoluteURL }: any) {
-  const { isInitialized, isAuthenticated, authenticate, logout, isWeb3Enabled, isWeb3EnableLoading, enableWeb3 } = useMoralis();
+  const { 
+    isInitialized, 
+    isInitializing,
+    isAuthenticated,
+    isAuthenticating,
+    isWeb3Enabled, 
+    isWeb3EnableLoading, 
+    enableWeb3,
+    authenticate, 
+    logout,  
+  } = useMoralis();
 
   useEffect(() => {
-    if (isInitialized && isAuthenticated && !isWeb3Enabled && !isWeb3EnableLoading) {
+    if (
+      !startedEnablingWeb3 &&
+      isInitialized && 
+      isAuthenticated &&
+      !isInitializing &&
+      !isAuthenticating && 
+      !isWeb3Enabled && 
+      !isWeb3EnableLoading
+    ) {
+      startedEnablingWeb3 = true
       enableWeb3()
     }
   }, [
     isInitialized, 
+    isInitializing,
     isAuthenticated, 
+    isAuthenticating,
     isWeb3Enabled, 
     isWeb3EnableLoading
   ]);
