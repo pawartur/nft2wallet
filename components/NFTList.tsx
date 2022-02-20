@@ -129,8 +129,8 @@ export class NFTList extends React.Component<Props, State> {
   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
 </svg><div className="font-sans font-semibold">{this.getCachedNFTMetadata(nft)?.name}</div></div>
 <div className="w-full text-left font-sans font-light text-slate-600 flex items-center">
-<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+<svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
 </svg> <div className="truncate">{this.getCachedNFTMetadata(nft)?.description}</div></div>
 
         </div>
@@ -198,7 +198,7 @@ export class NFTList extends React.Component<Props, State> {
   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
 </svg></div>Your NFT is being transformed into an Apple Wallet Pass. Please wait!</div></div>
 <div className="w-full sticky inset-0 p-10 rounded-xl bg-green-200 font-sans font-semibold flex items-center justify-center" id="action-confirm" style={{display: 'none' }}> <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
 </svg>Your Apple Pass was sent successfuly!</div>
       </div>
     );
