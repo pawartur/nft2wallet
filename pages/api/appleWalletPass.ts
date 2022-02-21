@@ -46,10 +46,7 @@ export default async function handler(
         }
 
         // TODO: Validate other params
-        console.log(process.env.NEXT_PUBLIC_SERVER_URL)
-        console.log(process.env.NEXT_PUBLIC_APP_ID)
         const Moralis = require('moralis/node');
-        console.log("Moralis = " + Moralis)
         await Moralis.start({
           serverUrl: process.env.NEXT_PUBLIC_SERVER_URL || "",
           appId:process.env.NEXT_PUBLIC_APP_ID || ""
@@ -80,7 +77,6 @@ export default async function handler(
             ]
           )          
         }
-        
         res.status(200).json({ message: "Create and send coupon request created", error: undefined})
       }
       break;
