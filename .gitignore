@@ -33,5 +33,9 @@ yarn-error.log*
 # vercel
 .vercel
 
+# Docker
+Dockerfile
+.dockerignore
+
 # typescript
 *.tsbuildinfo

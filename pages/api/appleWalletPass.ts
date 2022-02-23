@@ -2,7 +2,6 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { generatePass } from "../../helpers/backendAppleWalletPassAPI";
 import { sendEmail } from "../../helpers/backendEmailAPI";
 import { fetchNFT } from "../../helpers/NFTAPI";
-import { Moralis }  from "moralis";
 import { validateEmail } from "../../helpers/emailAPI";
 import { ethers } from "ethers";
 
@@ -15,11 +14,6 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  Moralis.start({
-    serverUrl: process.env.NEXT_PUBLIC_SERVER_URL || "",
-    appId:process.env.NEXT_PUBLIC_APP_ID || ""
-  })
-
   switch(req.method) {
     case "POST":
       {
@@ -29,6 +23,11 @@ export default async function handler(
         const tokenId: string = req.body["token_id"]
         const emailAddress: string = req.body["email_address"]
         const signature: string = req.body["signature"]
+
+        if (!validateEmail(emailAddress)) {
+          res.status(400).json({ message: "Invalid email address", error: undefined})
+          return;
+        }
 
         // Check the signature
         const messageToSign = JSON.stringify([
@@ -46,14 +45,15 @@ export default async function handler(
           return;
         }
 
-        if (!validateEmail(emailAddress)) {
-          res.status(400).json({ message: "Invalid email address", error: undefined})
-          return;
-        }
-
         // TODO: Validate other params
+        const Moralis = require('moralis/node');
+        await Moralis.start({
+          serverUrl: process.env.NEXT_PUBLIC_SERVER_URL || "",
+          appId:process.env.NEXT_PUBLIC_APP_ID || ""
+        })
 
         const nft = await fetchNFT(
+          Moralis,
           walletAddress,
           tokenAddress,
           tokenId
@@ -64,8 +64,7 @@ export default async function handler(
             absoluteURL,
             walletAddress
           )
-          const buf = await pass.asBuffer();
-          console.log(buf)
+          const buf = await pass.asBuffer()
           sendEmail(
             emailAddress,
             "Click on the attachment to add your NFT to Apple Wallet!",
